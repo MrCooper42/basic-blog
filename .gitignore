@@ -1,0 +1,9 @@
+# Environment Variables
+.env
+
+# npm cash dir
+.npm
+
+# dependancy dir
+node_modules
+jspm_packages
