@@ -1,38 +1,46 @@
 'use strict';
 
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
+if (process.env.NODE_ENV !== `production`) {
+  require(`dotenv`).config();
 }
 
-const express = require('express');
-const path = require('path');
-// const favicon = require('serve-favicon');
-const logger = require('morgan');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
+const express = require(`express`);
+const cookieParser = require(`cookie-parser`);
+const bodyParser = require(`body-parser`);
 const session = require(`express-session`);
+const logger = require(`morgan`);
+const path = require(`path`);
+// const favicon = require(`serve-favicon`);
 const passport = require(`passport`);
-const local = require(`passport-local`).Strategy
+// const local = require(`passport-local`).Strategy
 
-const routes = require('./routes/index');
-const users = require('./routes/users');
+const auth = require(`./auth`);
+const routes = require(`./routes/index`);
+const users = require(`./routes/users`);
 
 const app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, 'views'));
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
+app.use(session({
+  secret: process.env.SESSION_KEY,
+  resave: false,
+  saveUninitalized: false
+}));
+app.use(auth.passport.initialize());
+app.use(auth.passport.session());
 
-app.use(express.session({ secret: `this is my secret string` }));
-app.use(passport.initalize());
 
 app.use('/', routes);
 app.use('/users', users);

@@ -20,11 +20,22 @@ const createUser = (username, token) => {
 
 const editUser = (uersname, token) => {
   return knex(`users`)
-    .where(`username`, username)
+    .where({
+      googleId: profileId
+    })
     .update(`token`, token);
 };
 
 const deleteUser = (username, token) => {
   return knex(`users`)
-    .where(``)
+    .where({
+      googleId: profileId
+    })
+};
+
+module.exports = {
+  getUser,
+  createUser,
+  editUser,
+  deleteUser,
 };

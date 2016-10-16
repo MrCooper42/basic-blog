@@ -7,21 +7,26 @@ const auth = require(`../auth`);
 
 router.get(`/`, (req, res, next) => {
   res.render(`index`, {
-    user: request.user
+    user: req.user
   });
 });
 
 router.get(`/login`, (req, res) => {
   res.render(`login`, {
-    user: request.user
+    user: req.user
   });
 });
+
+router.get(`/auth/google`, auth.passport.authenticate(`google`, {
+  scope: ['openid email profile']
+}));
 
 router.get(`/auth/google/callback`, auth.passport.authenticate(`google`, {
     failureRedirect: `/login`
   }),
-  (req, res) => res.redirect(`/`);
-);
+  (req, res) => {
+    res.redirect(`/`);
+  });
 
 router.get(`/logout`, (req, res) => {
   req.logout();
@@ -29,11 +34,11 @@ router.get(`/logout`, (req, res) => {
 });
 
 //ensure authenticated
-const ensureAuthenticated = (req, res, next) {
+const ensureAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   }
   res.redirect(`/login`);
 }
 
-module.exports = router;
+module.exports = router;;
