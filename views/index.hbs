@@ -1,10 +1,45 @@
 {{#if user}}
-	<h2>Hello, {{ user.displayName }}.</h2>
-	{{#each user.photos}}<img src="{{ value }}" alt="userPhoto">{{/each}}
-	<a href="/" class='button'>Home</a> |
-	<a href="/logout" class='button'>Log Out</a>
+    <div class="row">
+        <h1 class="center-align">{{title}}put titile here</h1>
+        <left class="col m3 s12 left">
+            <h5 class="name center-align">{{ user.displayName }}</h5>
+            {{#each user.photos}}<img class="profilePic responsive-img" src="{{ value }}" alt="user photo">{{/each}}
+            <br>
+            <p>
+                <a href="/" class='homebtn waves-effect waves-light btn hide-on-large-only'>Home</a>
+                <a href="/logout" class='logoutbtn waves-effect waves-light btn hide-on-large-only'>Log Out</a>
+                <a href="/" class='waves-effect waves-light btn hide-on-med-and-down'>Home</a>
+                <a href="/logout" class='waves-effect waves-light btn hide-on-med-and-down'>Log Out</a>
+            </p>
+        </left>
+        <right class="col m9">
+            <form name="newPost" class="newPost" action="/index" method="post">
+                <input type="text" name="title" class="title validate" placeholder="Post title here."><label for="title">Title</label>
+                <input type="text" class="content validate" name="content" placeholder="Post content here."><label for="content">Content</label>
+                <button type="submit" class="waves-effect waves-light btn right" name="submit">Submit</button>
+            </form>
+            <!-- <a href="/post" class="waves-effect waves-light btn">New Post</a> -->
+            {{#each posts}}
+            <div class="row">
+              <div class="class posts col s12 card">
+                <div class="card-content orange-text">
+                  <a href="/comment/{{id}}" class="card-title">{{postTitle}}</a>
+                  <p class="content">{{content}}</p>
+                </div>
+              </div>
+            </div>
+            {{/each}}
+        </right>
 {{else}}
-	<h2>Welcome! Please log in.</h2>
-	<a href="/" class='button'>Home</a> |
-	<a href="/login" class='button'>Log In</a>
+    <h2 class="center-align">Welcome to Somewhat Cliche!<br>Please log in.</h2>
+    <p>
+        <a href="/" class='homebtn waves-effect waves-light btn hide-on-large-only'>Home</a>
+        <a href="/login" class='logoutbtn waves-effect waves-light btn hide-on-large-only'>log in with google</a>
+        <a href="/" class='waves-effect waves-light btn hide-on-med-and-down'>Home</a>
+        <a href="/login" class='waves-effect waves-light btn hide-on-med-and-down'>log in with google</a>
+    </p>
+    </p>
+    <!-- <a href="/" class='button'>Home</a> |
+            <a href="/login" class='button'>Log In</a> -->
 {{/if}}
+</div>

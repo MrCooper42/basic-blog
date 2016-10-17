@@ -2,35 +2,34 @@
 
 const knex = require(`./knex`);
 
-const getUser = (username) => {
+const getUser = (profileId) => {
+  console.log("profileId", profileId);
   return knex(`users`)
     .select()
     .where({
-      googleId: profileId
+      google_id: profileId
     })
     .first();
 };
 
-const createUser = (username, token) => {
+const createUser = (profileId, name) => {
   return knex(`users`)
     .insert({
-      googleId: profileId
+      google_id: profileId,
     });
 };
 
-const editUser = (uersname, token) => {
+const editUser = (profileId, name) => {
   return knex(`users`)
     .where({
-      googleId: profileId
+      'google_id': profileId
     })
-    .update(`token`, token);
+    .update(name, token);
 };
 
-const deleteUser = (username, token) => {
+const deleteUser = (profileId, token) => {
   return knex(`users`)
-    .where({
-      googleId: profileId
-    })
+    .where('google_id', profileId)
 };
 
 module.exports = {
