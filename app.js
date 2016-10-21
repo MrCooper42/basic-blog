@@ -11,7 +11,6 @@ const session = require(`express-session`);
 const logger = require(`morgan`);
 const path = require(`path`);
 const passport = require(`passport`);
-
 const auth = require(`./auth`);
 const routes = require(`./routes/index`);
 
