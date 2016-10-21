@@ -18,7 +18,7 @@ passport.use(new GoogleStrategy({
     callbackURL: `${process.env.HOST}/auth/google/callback`
   },
   (accessToken, refreshToken, profile, done) => {
-    db.getUser(profile.id).then(function(id) {
+    db.getUser(profile.id).then((id) => {
       if (id) {
         return done(null, profile);
       } else {
