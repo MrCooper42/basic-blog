@@ -7,7 +7,7 @@ const db = require(`../db/api`);
 
 //get all posts
 router.get(`/`, (req, res) => {
-  db.getPosts().then(posts => {
+  Promise.db.getPosts().then(posts => {
     res.render(`index`, {
       user: req.user,
       posts: posts
