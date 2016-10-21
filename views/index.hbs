@@ -28,7 +28,7 @@
                             <p>
                                 created at: {{this.created_at}}
                             </p>
-                            <button class="waves-effect waves-light btn modal-trigger" data-target="{{this.id}}">Edit {{this.id}}</button>
+                            <button class="waves-effect waves-light btn modal-trigger" data-target="{{this.id}}">Edit</button>
                             <a class="btn delete-post" href="/{{this.id}}">Delete</a>
 
                             <!-- Modal Structure -->
@@ -39,14 +39,14 @@
                                         <form class="col s12" action="/edit/{{this.id}}" method="post">
                                             <div class="row">
                                                 <div class="input-field col s12">
-                                                    <input name="editTitle" id="edit_title" type="text" class="validate" placeholder={{this.title}}>{{this.title}}</input>
-                                                    <label for="editTitle">{{this.title}}</label>
+                                                    <textarea name="editTitle" id="edit_title" type="text" class="materialize-textarea validate" placeholder={{this.title}}>{{this.postTitle}}</textarea>
+                                                    <label for="editTitle">Edit Title</label>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="input-field col s12">
                                                     <textarea name="editContent" id="edit_content" type="text" class="materialize-textarea validate" placeholder={{this.content}}>{{this.content}}</textarea>
-                                                    <label for="editContent">{{this.content}}</label>
+                                                    <label for="editContent">Edit Content</label>
                                                 </div>
                                             </div>
                                             <button type="submit" class="waves-effect waves-light btn right" name="submit">Submit</button>

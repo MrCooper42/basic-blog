@@ -5,9 +5,16 @@ const router = express.Router();
 const auth = require(`../auth`);
 const db = require(`../db/api`);
 
+const ensureAuthenticated = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect(`/auth/google`);
+}
+
 //get all posts
-router.get(`/`, (req, res) => {
-  Promise.db.getPosts().then(posts => {
+router.get(`/`, ensureAuthenticated, (req, res) => {
+  db.getPosts().then(posts => {
     res.render(`index`, {
       user: req.user,
       posts: posts
@@ -65,11 +72,5 @@ router.get('/:id', (req, res) => {
 })
 
 //ensure authenticated
-const ensureAuthenticated = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect(`/login`);
-}
 
 module.exports = router;
