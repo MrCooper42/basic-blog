@@ -20,7 +20,6 @@
         "passport": "^0.3.2",
         "passport-google-oauth": "^1.0.0",
         "pg": "^6.1.0",
-        "serve-favicon": "~2.3.0"
     },
     "devDependencies": {
         "dotenv": "^2.0.0",

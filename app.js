@@ -10,13 +10,10 @@ const bodyParser = require(`body-parser`);
 const session = require(`express-session`);
 const logger = require(`morgan`);
 const path = require(`path`);
-// const favicon = require(`serve-favicon`);
 const passport = require(`passport`);
-// const local = require(`passport-local`).Strategy
 
 const auth = require(`./auth`);
 const routes = require(`./routes/index`);
-// const users = require(`./routes/users`);
 
 const app = express();
 
