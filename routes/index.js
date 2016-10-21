@@ -12,7 +12,6 @@ router.get(`/`, (req, res) => {
       user: req.user,
       posts: posts
     })
-    console.log(posts, '[posts]');
   })
 })
 
@@ -52,11 +51,8 @@ router.post(`/`, (req, res) => {
 })
 
 //edit a post
-router.post('/:id', (req, res) => {
-  console.log(req.body, 'body')
-  console.log(req.params.id, 'rekd');
+router.post('/edit/:id', (req, res) => {
   db.updatePost(req.params.id, req.body).then(() => {
-    console.log(req.params.id, 'params');
     res.redirect('/')
   })
 })

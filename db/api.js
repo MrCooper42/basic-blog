@@ -3,7 +3,6 @@
 const knex = require(`./knex`);
 
 const getUser = (profileId) => {
-  console.log("profileId", profileId);
   return knex(`users`)
     .select()
     .where({
@@ -40,16 +39,14 @@ const createPost = (userId, displayName, title, content) => {
   })
 }
 
-const updatePost = (req_pId, post) => {
-  console.log(req_pId, 'reqed');
+const updatePost = (req_pId, editPost) => {
   return knex(`posts`).select()
-  console.log(`posts.id`, 'pastaos')
     .where(`posts.id`, req_pId).first()
     .then((post) => {
       return knex(`posts`)
         .update({
-          'postTitle': post.editTitle,
-          'content': post.editContent
+          'postTitle': editPost.editTitle || post.title,
+          'content': editPost.editContent || post.content
         }).where(`posts.id`, req_pId)
     })
 }

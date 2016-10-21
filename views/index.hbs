@@ -28,25 +28,25 @@
                             <p>
                                 created at: {{this.created_at}}
                             </p>
-                            <button class="waves-effect waves-light btn modal-trigger" data-target="edit-modal">Edit</button>
+                            <button class="waves-effect waves-light btn modal-trigger" data-target="{{this.id}}">Edit {{this.id}}</button>
                             <a class="btn delete-post" href="/{{this.id}}">Delete</a>
 
                             <!-- Modal Structure -->
-                            <div id="edit-modal" class="modal">
+                            <div id="{{this.id}}" class="modal">
                                 <div class="modal-content">
                                     <h4>Edit this post.</h4>
                                     <div class="row">
-                                        <form class="col s12" action="/{{this.id}}" method="post">
+                                        <form class="col s12" action="/edit/{{this.id}}" method="post">
                                             <div class="row">
                                                 <div class="input-field col s12">
-                                                    <input name="editTitle" id="edit_title" type="text" class="validate" placeholder={{this.title}}>{{this.title}}</textarea>
-                                                    <label for="edit_title">{{this.title}}</label>
+                                                    <input name="editTitle" id="edit_title" type="text" class="validate" placeholder={{this.title}}>{{this.title}}</input>
+                                                    <label for="editTitle">{{this.title}}</label>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="input-field col s12">
                                                     <textarea name="editContent" id="edit_content" type="text" class="materialize-textarea validate" placeholder={{this.content}}>{{this.content}}</textarea>
-                                                    <label for="edit_content">{{this.content}}</label>
+                                                    <label for="editContent">{{this.content}}</label>
                                                 </div>
                                             </div>
                                              <!-- <a href="/{{this.id}}" class=" modal-action modal-close waves-effect waves-green btn-flat edit-post">Submit</a> -->
@@ -67,9 +67,9 @@
     <h2 class="center-align">Welcome to Somewhat Cliche!<br>Please log in.</h2>
     <p>
         <a href="/" class='homebtn waves-effect waves-light btn hide-on-large-only'>Home</a>
-        <a href="/login" class='logoutbtn waves-effect waves-light btn hide-on-large-only'>log in with google</a>
+        <a href="/auth/google" class='logoutbtn waves-effect waves-light btn hide-on-large-only'>log in with google</a>
         <a href="/" class='waves-effect waves-light btn hide-on-med-and-down'>Home</a>
-        <a href="/login" class='waves-effect waves-light btn hide-on-med-and-down'>log in with google</a>
+        <a href="/auth/google" class='waves-effect waves-light btn hide-on-med-and-down'>Log in with google</a>
     </p>
     </p>
 {{/if}}
