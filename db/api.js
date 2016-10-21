@@ -12,29 +12,74 @@ const getUser = (profileId) => {
     .first();
 };
 
-const createUser = (profileId, name) => {
+const getAllUsers = () => {
+  return knex(`users`)
+}
+
+const createUser = (profileId, name, photo) => {
   return knex(`users`)
     .insert({
-      google_id: profileId,
+      'google_id': profileId,
+      'displayName': name,
+      'photos': photo
     });
 };
 
-const editUser = (profileId, name) => {
-  return knex(`users`)
-    .where({
-      'google_id': profileId
-    })
-    .update(name, token);
-};
 
-const deleteUser = (profileId, token) => {
-  return knex(`users`)
-    .where('google_id', profileId)
-};
+const getPosts = () => {
+  return knex(`posts`)
+    .select('*')
+}
+
+const createPost = (userId, displayName, title, content) => {
+  return knex(`posts`).insert({
+    'userId': userId,
+    'displayName': displayName,
+    'postTitle': title,
+    'content': content
+  })
+}
+
+const updatePost = (req_pId, post) => {
+  console.log(req_pId, 'reqed');
+  return knex(`posts`).select()
+  console.log(`posts.id`, 'pastaos')
+    .where(`posts.id`, req_pId).first()
+    .then((post) => {
+      return knex(`posts`)
+        .update({
+          'postTitle': post.editTitle,
+          'content': post.editContent
+        }).where(`posts.id`, req_pId)
+    })
+}
+
+const deletePost = (req) => {
+  return knex(`posts`)
+    .del()
+    .where(`posts.id`, req.params.id)
+}
+
+const getPostComments = () => {
+  return knex(`comments`)
+    .join(`posts`, `posts.id`, `comments.postId`)
+    // .join(`users`, `users.id`, `comments.userId`)
+    .select(`*`)
+}
+
+const createComment = (comment) => {
+  return knex(`comments`)
+    .insert(comment);
+}
 
 module.exports = {
   getUser,
+  getAllUsers,
   createUser,
-  editUser,
-  deleteUser,
+  getPosts,
+  createPost,
+  updatePost,
+  deletePost,
+  getPostComments,
+  createComment
 };

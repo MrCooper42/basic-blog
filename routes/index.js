@@ -3,24 +3,34 @@
 const express = require('express');
 const router = express.Router();
 const auth = require(`../auth`);
+const db = require(`../db/api`);
+
+//get all posts
+router.get(`/`, (req, res) => {
+  db.getPosts().then(posts => {
+    res.render(`index`, {
+      user: req.user,
+      posts: posts
+    })
+    console.log(posts, '[posts]');
+  })
+})
 
 
-router.get(`/`, (req, res, next) => {
-  res.render(`index`, {
-    user: req.user
-  });
-});
-
+//login
 router.get(`/login`, (req, res) => {
   res.render(`login`, {
     user: req.user
   });
 });
 
+
+//auth
 router.get(`/auth/google`, auth.passport.authenticate(`google`, {
   scope: ['openid email profile']
 }));
 
+//auth
 router.get(`/auth/google/callback`, auth.passport.authenticate(`google`, {
     failureRedirect: `/login`
   }),
@@ -28,10 +38,35 @@ router.get(`/auth/google/callback`, auth.passport.authenticate(`google`, {
     res.redirect(`/`);
   });
 
+//logout
 router.get(`/logout`, (req, res) => {
   req.logout();
   res.redirect(`/`);
 });
+
+//create a new post
+router.post(`/`, (req, res) => {
+  db.createPost(req.user.id, req.user.displayName, req.body.title, req.body.content).then(post => {
+    res.redirect(`/`)
+  })
+})
+
+//edit a post
+router.post('/:id', (req, res) => {
+  console.log(req.body, 'body')
+  console.log(req.params.id, 'rekd');
+  db.updatePost(req.params.id, req.body).then(() => {
+    console.log(req.params.id, 'params');
+    res.redirect('/')
+  })
+})
+
+//delete post
+router.get('/:id', (req, res) => {
+  db.deletePost(req).then(() => {
+    res.redirect('/')
+  })
+})
 
 //ensure authenticated
 const ensureAuthenticated = (req, res, next) => {
@@ -41,4 +76,4 @@ const ensureAuthenticated = (req, res, next) => {
   res.redirect(`/login`);
 }
 
-module.exports = router;;
+module.exports = router;

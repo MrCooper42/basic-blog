@@ -1,6 +1,6 @@
 {{#if user}}
     <div class="row">
-        <h1 class="center-align">{{title}}put titile here</h1>
+        <h1 class="center-align">Somewhat Cliche</h1>
         <left class="col m3 s12 left">
             <h5 class="name center-align">{{ user.displayName }}</h5>
             {{#each user.photos}}<img class="profilePic responsive-img" src="{{ value }}" alt="user photo">{{/each}}
@@ -13,21 +13,54 @@
             </p>
         </left>
         <right class="col m9">
-            <form name="newPost" class="newPost" action="/index" method="post">
+            <form name="post" class="newPost" action="/" method="post">
                 <input type="text" name="title" class="title validate" placeholder="Post title here."><label for="title">Title</label>
                 <input type="text" class="content validate" name="content" placeholder="Post content here."><label for="content">Content</label>
                 <button type="submit" class="waves-effect waves-light btn right" name="submit">Submit</button>
             </form>
-            <!-- <a href="/post" class="waves-effect waves-light btn">New Post</a> -->
             {{#each posts}}
-            <div class="row">
-              <div class="class posts col s12 card">
-                <div class="card-content orange-text">
-                  <a href="/comment/{{id}}" class="card-title">{{postTitle}}</a>
-                  <p class="content">{{content}}</p>
+                <div class="row">
+                    <div class="class posts col s12 card">
+                        <div class="card-content orange-text">
+                            <h4>{{postTitle}}</h4>
+                            <p class="card-title">by: {{displayName}}</p>
+                            <p class="content">{{content}}</p>
+                            <p>
+                                created at: {{this.created_at}}
+                            </p>
+                            <button class="waves-effect waves-light btn modal-trigger" data-target="edit-modal">Edit</button>
+                            <a class="btn delete-post" href="/{{this.id}}">Delete</a>
+
+                            <!-- Modal Structure -->
+                            <div id="edit-modal" class="modal">
+                                <div class="modal-content">
+                                    <h4>Edit this post.</h4>
+                                    <div class="row">
+                                        <form class="col s12" action="/{{this.id}}" method="post">
+                                            <div class="row">
+                                                <div class="input-field col s12">
+                                                    <input name="editTitle" id="edit_title" type="text" class="validate" placeholder={{this.title}}>{{this.title}}</textarea>
+                                                    <label for="edit_title">{{this.title}}</label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="input-field col s12">
+                                                    <textarea name="editContent" id="edit_content" type="text" class="materialize-textarea validate" placeholder={{this.content}}>{{this.content}}</textarea>
+                                                    <label for="edit_content">{{this.content}}</label>
+                                                </div>
+                                            </div>
+                                             <!-- <a href="/{{this.id}}" class=" modal-action modal-close waves-effect waves-green btn-flat edit-post">Submit</a> -->
+                                            <button type="submit" class="waves-effect waves-light btn right" name="submit">Submit</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
             {{/each}}
         </right>
 {{else}}
@@ -39,7 +72,6 @@
         <a href="/login" class='waves-effect waves-light btn hide-on-med-and-down'>log in with google</a>
     </p>
     </p>
-    <!-- <a href="/" class='button'>Home</a> |
-            <a href="/login" class='button'>Log In</a> -->
 {{/if}}
 </div>
+<script src="javascripts/app.js" charset="utf-8"></script>
