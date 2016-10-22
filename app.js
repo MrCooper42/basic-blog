@@ -10,12 +10,16 @@ const bodyParser = require(`body-parser`);
 const session = require(`express-session`);
 const logger = require(`morgan`);
 const path = require(`path`);
+const favicon = require(`serve-favicon`);
 const passport = require(`passport`);
 const auth = require(`./auth`);
 const routes = require(`./routes/index`);
 
 const app = express();
 
+
+// uncomment after placing your favicon in /public
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 // view engine setup
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
