@@ -9,11 +9,11 @@ const ensureAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   }
-  res.redirect(`/auth/google`);
+  res.redirect(`/`);
 }
 
 //get all posts
-router.get(`/`, ensureAuthenticated, (req, res) => {
+router.get(`/`, (req, res) => {
   db.getPosts().then(posts => {
     res.render(`index`, {
       user: req.user,
@@ -51,21 +51,21 @@ router.get(`/logout`, (req, res) => {
 });
 
 //create a new post
-router.post(`/`, (req, res) => {
+router.post(`/`, ensureAuthenticated, (req, res) => {
   db.createPost(req.user.id, req.user.displayName, req.body.title, req.body.content).then(post => {
     res.redirect(`/`)
   })
 })
 
 //edit a post
-router.post('/edit/:id', (req, res) => {
+router.post('/edit/:id', ensureAuthenticated, (req, res) => {
   db.updatePost(req.params.id, req.body).then(() => {
     res.redirect('/')
   })
 })
 
 //delete post
-router.get('/:id', (req, res) => {
+router.get('/:id', ensureAuthenticated, (req, res) => {
   db.deletePost(req).then(() => {
     res.redirect('/')
   })
