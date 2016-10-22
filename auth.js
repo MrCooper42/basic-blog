@@ -8,9 +8,6 @@ const db = require(`./db/api`);
 const passport = require(`passport`);
 const GoogleStrategy = require(`passport-google-oauth`).OAuth2Strategy;
 
-passport.serializeUser((user, done) => done(null, user));
-
-passport.deserializeUser((obj, done) => done(null, obj));
 
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
@@ -29,6 +26,10 @@ passport.use(new GoogleStrategy({
     });
   }
 ));
+
+passport.serializeUser((user, done) => done(null, user));
+
+passport.deserializeUser((obj, done) => done(null, obj));
 
 module.exports = {
   passport: passport

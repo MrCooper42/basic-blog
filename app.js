@@ -24,7 +24,6 @@ const app = express();
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
-
 app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
@@ -39,7 +38,6 @@ app.use(session({
 }));
 app.use(auth.passport.initialize());
 app.use(auth.passport.session());
-
 
 app.use('/', routes);
 
