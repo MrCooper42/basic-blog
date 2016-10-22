@@ -6,7 +6,7 @@ module.exports = {
     connection: `posgres://localhost/blog`
   },
   production: {
-    client: `pg`,
+    client: `postgresql`,
     connection: process.env.DATABASE_URL +
       '?ssl=true',
   }
